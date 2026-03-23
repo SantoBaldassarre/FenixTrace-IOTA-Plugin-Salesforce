@@ -1,0 +1,7 @@
+.sfdx/
+.sf/
+.localdevserver/
+deploy-options.json
+.DS_Store
+*.log
+node_modules/

@@ -1,0 +1,49 @@
+<template>
+    <lightning-card title="FenixTrace Blockchain" icon-name="standard:shield">
+        <div class="slds-p-around_medium">
+            <template if:true={status}>
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                        <p class="slds-text-title_caps slds-m-bottom_xx-small">Status</p>
+                        <lightning-badge label={status.state} class={stateBadgeClass}></lightning-badge>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 slds-m-bottom_small">
+                        <p class="slds-text-title_caps slds-m-bottom_xx-small">Last Sync</p>
+                        <p class="slds-text-body_small">{formattedLastSync}</p>
+                    </div>
+                    <template if:true={status.txHash}>
+                        <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+                            <p class="slds-text-title_caps slds-m-bottom_xx-small">TX Hash</p>
+                            <p class="hash-text">{status.txHash}</p>
+                        </div>
+                    </template>
+                    <template if:true={status.notarizationTxHash}>
+                        <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+                            <p class="slds-text-title_caps slds-m-bottom_xx-small">Notarization</p>
+                            <p class="hash-text">{status.notarizationTxHash}</p>
+                        </div>
+                    </template>
+                    <template if:true={showError}>
+                        <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+                            <div class="slds-box slds-theme_error slds-p-around_x-small">
+                                <p class="slds-text-body_small">{status.lastError}</p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+            <template if:false={status}>
+                <p class="slds-text-body_small slds-text-color_weak">Not yet synced to FenixTrace.</p>
+            </template>
+            <div class="slds-m-top_medium">
+                <lightning-button
+                    label={buttonLabel}
+                    variant="brand"
+                    onclick={handleSync}
+                    disabled={isSyncing}
+                    icon-name="utility:upload"
+                ></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>
