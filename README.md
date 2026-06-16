@@ -1,14 +1,16 @@
 # FenixTrace for Salesforce
 
-Salesforce package that registers Product2 records on the **IOTA L1** blockchain via the FenixTrace Integration Kit. Includes Apex classes, a Lightning Web Component, scheduled batch sync, and custom fields.
+Salesforce package that sends Product2 records to **FenixTrace** for product traceability and EU-compliance — origin proof, EUDR and Digital Product Passport readiness, and tamper-proof, anti-counterfeiting evidence. FenixTrace handles notarization, evidence and compliance automatically (server-side); the plugin just sends your product data. Includes Apex classes, a Lightning Web Component, scheduled batch sync, and custom fields.
 
 > Built by [Fenix Software Labs](https://www.fenixsoftwarelabs.com)
 
 ## How It Works
 
 ```
-Salesforce Product2 → Apex JSON payload → Integration Kit → IPFS + IOTA L1 → FenixTrace Scanner
+Salesforce Product2 → Apex JSON payload → Integration Kit → FenixTrace (notarization + compliance, server-side)
 ```
+
+The plugin's only job is to send product data to FenixTrace. Notarization, tamper-proof evidence and compliance records are produced automatically by FenixTrace in the background — no blockchain, wallet or storage setup required on your side.
 
 ## Requirements
 
@@ -47,7 +49,7 @@ Copy Apex classes, LWC, custom fields, and custom metadata to your Salesforce or
 ## Usage
 
 ### Single Product (LWC)
-Open any Product record → "FenixTrace Blockchain" card → click **"Send to FenixTrace"**
+Open any Product record → "FenixTrace Compliance" card → click **"Send to FenixTrace"**
 
 ### Batch Sync (Apex)
 ```apex
@@ -66,9 +68,9 @@ System.schedule('FenixTrace Hourly Sync', '0 0 * * * ?', new FenixTraceScheduler
 | Field | Type | Description |
 |---|---|---|
 | `FenixTrace_State__c` | Picklist | Draft / Queued / Synced / Error |
-| `FenixTrace_TX_Hash__c` | Text(255) | IOTA transaction hash |
-| `FenixTrace_Notarization_TX__c` | Text(255) | Notarization transaction hash |
-| `FenixTrace_IPFS_Hash__c` | Text(255) | IPFS content hash |
+| `FenixTrace_TX_Hash__c` | Text(255) | Notarization reference returned by FenixTrace |
+| `FenixTrace_Notarization_TX__c` | Text(255) | Notarization reference for the tamper-proof evidence record |
+| `FenixTrace_IPFS_Hash__c` | Text(255) | Content reference for the stored evidence returned by FenixTrace |
 | `FenixTrace_Last_Sync__c` | DateTime | Last successful sync |
 | `FenixTrace_Last_Error__c` | LongTextArea | Error message |
 
